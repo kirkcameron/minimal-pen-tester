@@ -1,0 +1,25 @@
+{
+    "enabled": false,
+    "security_level": "medium",
+    "fallback_allowed": true,
+    "log_level": "INFO",
+    "protected_endpoints": [
+        "/contact/contact.php",
+        "/mail.php",
+        "/admin"
+    ],
+    "excluded_endpoints": [
+        "/index.html",
+        "/css/",
+        "/js/",
+        "/images/",
+        "/robots.txt",
+        "/sitemap.xml"
+    ],
+    "integration_mode": "safe",
+    "monitoring": {
+        "enabled": true,
+        "log_attempts": true,
+        "alert_threshold": 10
+    }
+}
