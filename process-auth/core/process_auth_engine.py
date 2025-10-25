@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-Process-Based Authentication Engine
-==================================
+Process-Based Security Testing Engine
+====================================
 
-A dynamic, generic implementation of server-side process authentication
-for web security. This engine leverages system-level knowledge that
-external processes cannot replicate.
+⚠️  WARNING: This is a PENETRATION TESTING tool, not a security solution.
+
+This engine tests whether target applications can distinguish between
+internal and external processes. It is designed for security testing
+and research purposes only.
+
+DO NOT use this for production security - it is experimental and
+process-based authentication can be easily bypassed.
 
 Author: Process Auth Team
 License: MIT
@@ -75,10 +80,16 @@ class AuthResult:
 
 class ProcessAuthEngine:
     """
-    Dynamic Process-Based Authentication Engine
+    Process-Based Security Testing Engine
     
-    This engine provides multiple layers of authentication using
-    system-level knowledge that external processes cannot replicate.
+    ⚠️  WARNING: This is for PENETRATION TESTING only, not production security.
+    
+    This engine tests whether target applications can distinguish between
+    internal and external processes. It simulates various process
+    relationships to test security boundaries.
+    
+    DO NOT use for production authentication - process-based security
+    can be easily bypassed and is not reliable.
     """
     
     def __init__(self, security_level: SecurityLevel = SecurityLevel.MEDIUM):

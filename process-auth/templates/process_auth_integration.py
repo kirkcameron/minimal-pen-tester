@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """
-Process Authentication Integration Wrapper
-Safe integration of process-based authentication into existing systems
+Process-Based Security Testing Integration Wrapper
+=================================================
+
+⚠️  WARNING: This is a PENETRATION TESTING tool, not a security solution.
+
+This wrapper tests whether target applications can distinguish between
+internal and external processes. It is designed for security testing
+and research purposes only.
+
+DO NOT use for production security - process-based authentication
+can be easily bypassed and is not reliable.
 """
 
 import os
@@ -24,8 +33,16 @@ except ImportError as e:
 
 class ProcessAuthIntegration:
     """
-    Safe integration wrapper for process-based authentication
-    Can be disabled without breaking existing functionality
+    Process-Based Security Testing Integration Wrapper
+    
+    ⚠️  WARNING: This is for PENETRATION TESTING only, not production security.
+    
+    This wrapper tests whether target applications can distinguish between
+    internal and external processes. It can be disabled without breaking
+    existing functionality.
+    
+    DO NOT use for production security - process-based authentication
+    can be easily bypassed and is not reliable.
     """
     
     def __init__(self, config_file: str = "process_auth_config.json"):

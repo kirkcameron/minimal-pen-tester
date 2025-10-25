@@ -4,6 +4,10 @@ A lightweight penetration testing toolkit for web applications, specifically des
 
 > **Portable Scripts**: All shell scripts use `#!/usr/bin/env bash` for maximum compatibility across macOS, Linux, BSD, and Docker environments.
 
+## ⚠️ Important: This is a Penetration Testing Tool
+
+**This tool is designed for authorized penetration testing only. It sends malicious payloads and tests security boundaries. Use responsibly and only on systems you own or have explicit permission to test.**
+
 ## 🌐 What is httpbin.org?
 
 **httpbin.org is a free HTTP testing service** perfect for learning security tools:
@@ -66,12 +70,32 @@ cd minimal-pen-tester
 
 - Direct file access, header injection, XSS, SQL injection
 - Rate limiting, input validation, directory browsing
-- Process authentication (novel approach)
+- Process-based security testing (experimental approach)
 
 **Attack Vectors:**
 
 - Email header injection, XSS payloads, SQL injection
-- Path traversal, rate limiting, process ID spoofing
+- Path traversal, rate limiting, process relationship testing
+
+## 🧪 Process-Based Security Testing
+
+**What It Tests:** Whether target applications can distinguish between internal and external processes.
+
+**How It Works:**
+
+1. **Simulates internal processes** (legitimate application requests)
+2. **Simulates external processes** (attack tools, automated scripts)
+3. **Tests process authentication bypasses**
+4. **Identifies process-based security weaknesses**
+
+**What It Identifies:**
+
+- Process isolation mechanisms
+- Process-based access controls
+- System-level security boundaries
+- Process relationship validation
+
+**Note:** This is a **testing technique**, not a security feature. It tests whether targets implement process-based security controls.
 
 ## 🔒 Security Considerations
 
@@ -79,6 +103,8 @@ cd minimal-pen-tester
 - ✅ **Get permission before testing**
 - ⚠️ **Unauthorized testing is illegal**
 - ⚠️ **Follow responsible disclosure**
+- ⚠️ **This tool sends malicious payloads - use responsibly**
+- ⚠️ **Process-based testing is experimental - results may vary**
 
 ## 📚 Related Projects
 
@@ -94,4 +120,22 @@ See [example_test_report.txt](example_report/example_test_report.txt) for a comp
 
 ---
 
-**Remember: Always test responsibly and with proper authorization!** 🛡️
+**Remember: This is a penetration testing tool that sends malicious payloads. Always test responsibly and with proper authorization!** 🛡️
+
+## ⚠️ Process Authentication Disclaimer
+
+**Important:** The process-based security testing included in this toolkit is **experimental** and should not be relied upon for production security. It is designed to test whether target applications implement process-based security controls, not to provide security for your applications.
+
+**What it actually does:**
+
+- Tests if targets can distinguish between internal/external processes
+- Identifies process-based security mechanisms
+- Tests process authentication bypasses
+- Validates system-level security boundaries
+
+**What it does NOT do:**
+
+- Provide secure authentication
+- Guarantee security
+- Replace proper security measures
+- Work reliably in all environments
