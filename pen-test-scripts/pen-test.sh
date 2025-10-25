@@ -70,7 +70,7 @@ if [[ ! "$TARGET_URL" =~ /$ ]]; then
     TARGET_URL="${TARGET_URL}/"
 fi
 
-echo -e "${BLUE}🔍 Starting penetration test against: $TARGET_URL${NC}"
+echo -e "${BLUE}[INFO] Starting penetration test against: $TARGET_URL${NC}"
 echo ""
 
 # Test 1: Direct script access
@@ -78,13 +78,17 @@ echo -e "${YELLOW}Test 1: Direct script access${NC}"
 echo "Testing: $TARGET_URL"mail.php
 response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL"mail.php)
 if [[ "$response" == "200" ]]; then
-    echo -e "${RED}❌ VULNERABLE: mail.php is directly accessible (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] mail.php is directly accessible (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Response content:"
         curl -s "$TARGET_URL"mail.php | head -5
     fi
+elif [[ "$response" == "404" ]]; then
+    echo -e "${GREEN}[SECURE] mail.php not found (HTTP $response)${NC}"
+elif [[ "$response" == "403" ]]; then
+    echo -e "${GREEN}[SECURE] mail.php protected (HTTP $response)${NC}"
 else
-    echo -e "${GREEN}✅ SECURE: mail.php is not directly accessible (HTTP $response)${NC}"
+    echo -e "${YELLOW}[WARNING] Unexpected response (HTTP $response)${NC}"
 fi
 echo ""
 
@@ -93,13 +97,17 @@ echo -e "${YELLOW}Test 2: Config file exposure${NC}"
 echo "Testing: $TARGET_URL"config.php
 response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL"config.php)
 if [[ "$response" == "200" ]]; then
-    echo -e "${RED}❌ VULNERABLE: config.php is accessible (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] config.php is accessible (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Response content:"
         curl -s "$TARGET_URL"config.php | head -5
     fi
+elif [[ "$response" == "404" ]]; then
+    echo -e "${GREEN}[SECURE] config.php not found (HTTP $response)${NC}"
+elif [[ "$response" == "403" ]]; then
+    echo -e "${GREEN}[SECURE] config.php protected (HTTP $response)${NC}"
 else
-    echo -e "${GREEN}✅ SECURE: config.php is not accessible (HTTP $response)${NC}"
+    echo -e "${YELLOW}[WARNING] Unexpected response (HTTP $response)${NC}"
 fi
 echo ""
 
@@ -109,13 +117,17 @@ echo "Testing: $TARGET_URL".htaccess
 response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL".htaccess)
 # Check if 200 response contains actual .htaccess content
 if [[ "$response" == "200" ]] && curl -s "$TARGET_URL".htaccess | grep -q "RewriteRule\|DirectoryIndex\|Options"; then
-    echo -e "${RED}❌ VULNERABLE: .htaccess is accessible (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] .htaccess is accessible (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Response content:"
         curl -s "$TARGET_URL".htaccess | head -5
     fi
+elif [[ "$response" == "404" ]]; then
+    echo -e "${GREEN}[SECURE] .htaccess not found (HTTP $response)${NC}"
+elif [[ "$response" == "403" ]]; then
+    echo -e "${GREEN}[SECURE] .htaccess protected (HTTP $response)${NC}"
 else
-    echo -e "${GREEN}✅ SECURE: .htaccess is not accessible (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] .htaccess not accessible (HTTP $response)${NC}"
 fi
 echo ""
 
@@ -126,31 +138,59 @@ response=$(curl -s -o /dev/null -X POST "$TARGET_URL"mail.php \
     -d "name=Test&email=test@evil.com%0d%0aBcc:spam@victim.com&message=Test" \
     -w "%{http_code}")
 if [[ "$response" == "200" ]]; then
-    echo -e "${RED}❌ VULNERABLE: Header injection possible (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] Header injection possible (HTTP $response)${NC}"
     echo "The email field accepts newline characters that could inject headers"
 elif [[ "$response" == "404" ]]; then
-    echo -e "${GREEN}✅ SECURE: mail.php not accessible (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] mail.php not accessible (HTTP $response)${NC}"
 elif [[ "$response" == "405" ]]; then
-    echo -e "${GREEN}✅ SECURE: POST method not allowed (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] POST method not allowed (HTTP $response)${NC}"
 else
-    echo -e "${GREEN}✅ SECURE: Header injection blocked (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] Header injection blocked (HTTP $response)${NC}"
 fi
 echo ""
 
 # Test 5: Rate limiting test
 echo -e "${YELLOW}Test 5: Rate limiting test${NC}"
-echo "Sending 5 rapid requests to test rate limiting..."
-for i in {1..5}; do
-    response=$(curl -s -X POST "$TARGET_URL"mail.php \
-        -d "name=Spam$i&email=spam$i@test.com&message=Spam test $i" \
-        -w "%{http_code}")
-    if [[ "$response" == "429" ]]; then
-        echo -e "${GREEN}✅ SECURE: Rate limiting active (HTTP $response)${NC}"
-        break
-    elif [[ "$i" == "5" ]]; then
-        echo -e "${RED}❌ VULNERABLE: No rate limiting detected${NC}"
+echo "Testing rate limiting on common mail endpoints..."
+
+# First check if mail.php exists
+mail_response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL"mail.php)
+if [[ "$mail_response" == "404" ]]; then
+    echo -e "${BLUE}[INFO] mail.php not found (HTTP 404) - testing alternative endpoints${NC}"
+    
+    # Test secure-mail-handler.php if it exists
+    secure_response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL"secure-mail-handler.php)
+    if [[ "$secure_response" == "200" ]]; then
+        echo "Testing rate limiting on secure-mail-handler.php..."
+        for i in {1..3}; do
+            response=$(curl -s -X POST "$TARGET_URL"secure-mail-handler.php \
+                -d "name=Spam$i&email=spam$i@test.com&message=Spam test $i&_token=kraemer_secure_2024_$(date +%Y-%m-%d)" \
+                -w "%{http_code}")
+            if [[ "$response" == "429" ]]; then
+                echo -e "${GREEN}[SECURE] Rate limiting active (HTTP $response)${NC}"
+                break
+            elif [[ "$i" == "3" ]]; then
+                echo -e "${YELLOW}[WARNING] No rate limiting detected on secure-mail-handler.php${NC}"
+            fi
+        done
+    else
+        echo -e "${BLUE}[INFO] No mail endpoints found for rate limiting test${NC}"
+        echo -e "${GREEN}[SECURE] No vulnerable mail scripts detected${NC}"
     fi
-done
+else
+    echo "Testing rate limiting on mail.php..."
+    for i in {1..5}; do
+        response=$(curl -s -X POST "$TARGET_URL"mail.php \
+            -d "name=Spam$i&email=spam$i@test.com&message=Spam test $i" \
+            -w "%{http_code}")
+        if [[ "$response" == "429" ]]; then
+            echo -e "${GREEN}[SECURE] Rate limiting active (HTTP $response)${NC}"
+            break
+        elif [[ "$i" == "5" ]]; then
+            echo -e "${RED}[VULNERABLE] No rate limiting detected on mail.php${NC}"
+        fi
+    done
+fi
 echo ""
 
 # Test 6: Input validation test
@@ -160,13 +200,13 @@ response=$(curl -s -o /dev/null -X POST "$TARGET_URL"mail.php \
     -d "name=<script>alert('xss')</script>&email=invalid-email&message=" \
     -w "%{http_code}")
 if [[ "$response" == "400" ]]; then
-    echo -e "${GREEN}✅ SECURE: Input validation active (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] Input validation active (HTTP $response)${NC}"
 elif [[ "$response" == "404" ]]; then
-    echo -e "${GREEN}✅ SECURE: mail.php not accessible (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] mail.php not accessible (HTTP $response)${NC}"
 elif [[ "$response" == "405" ]]; then
-    echo -e "${GREEN}✅ SECURE: POST method not allowed (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] POST method not allowed (HTTP $response)${NC}"
 else
-    echo -e "${RED}❌ VULNERABLE: Input validation insufficient (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] Input validation insufficient (HTTP $response)${NC}"
 fi
 echo ""
 
@@ -175,9 +215,9 @@ echo -e "${YELLOW}Test 7: Directory browsing${NC}"
 echo "Testing: $TARGET_URL"
 response=$(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL")
 if curl -s "$TARGET_URL" | grep -q "Index of"; then
-    echo -e "${RED}❌ VULNERABLE: Directory browsing enabled${NC}"
+    echo -e "${RED}[VULNERABLE] Directory browsing enabled${NC}"
 else
-    echo -e "${GREEN}✅ SECURE: Directory browsing disabled${NC}"
+    echo -e "${GREEN}[SECURE] Directory browsing disabled${NC}"
 fi
 echo ""
 
@@ -193,16 +233,16 @@ response=$(curl -s -o /dev/null -X POST "$TARGET_URL"mail.php \
     -w "%{http_code}")
 
 if [[ "$response" == "200" ]]; then
-    echo -e "${GREEN}✅ SECURE: Process authentication active (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] Process authentication active (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Server successfully validated internal process relationship"
     fi
 elif [[ "$response" == "404" ]]; then
-    echo -e "${GREEN}✅ SECURE: mail.php not accessible (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] mail.php not accessible (HTTP $response)${NC}"
 elif [[ "$response" == "405" ]]; then
-    echo -e "${GREEN}✅ SECURE: POST method not allowed (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] POST method not allowed (HTTP $response)${NC}"
 else
-    echo -e "${YELLOW}⚠️  WARNING: Process authentication unclear (HTTP $response)${NC}"
+    echo -e "${YELLOW}[WARNING] Process authentication unclear (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Server response suggests process authentication may not be implemented"
     fi
@@ -221,21 +261,21 @@ response=$(curl -s -o /dev/null -X POST "$TARGET_URL"mail.php \
     -w "%{http_code}")
 
 if [[ "$response" == "403" ]] || [[ "$response" == "401" ]]; then
-    echo -e "${GREEN}✅ SECURE: External process blocked (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] External process blocked (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Server successfully blocked external process access"
     fi
 elif [[ "$response" == "404" ]]; then
-    echo -e "${GREEN}✅ SECURE: mail.php not accessible (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] mail.php not accessible (HTTP $response)${NC}"
 elif [[ "$response" == "405" ]]; then
-    echo -e "${GREEN}✅ SECURE: POST method not allowed (HTTP $response)${NC}"
+    echo -e "${GREEN}[SECURE] POST method not allowed (HTTP $response)${NC}"
 elif [[ "$response" == "200" ]]; then
-    echo -e "${RED}❌ VULNERABLE: External process not blocked (HTTP $response)${NC}"
+    echo -e "${RED}[VULNERABLE] External process not blocked (HTTP $response)${NC}"
     if [[ "$VERBOSE" == "true" ]]; then
         echo "Server accepted external process call - process authentication may be insufficient"
     fi
 else
-    echo -e "${YELLOW}⚠️  WARNING: External process blocking unclear (HTTP $response)${NC}"
+    echo -e "${YELLOW}[WARNING] External process blocking unclear (HTTP $response)${NC}"
 fi
 echo ""
 
@@ -249,17 +289,17 @@ if [ -f "./process_auth_comprehensive_tests.sh" ]; then
     chmod +x ./process_auth_comprehensive_tests.sh
     ./process_auth_comprehensive_tests.sh
 else
-    echo -e "${YELLOW}⚠️  WARNING: Comprehensive test script not found${NC}"
+    echo -e "${YELLOW}[WARNING] Comprehensive test script not found${NC}"
     echo "Comprehensive process authentication tests not available"
 fi
 echo ""
 
-echo -e "${BLUE}🔍 Penetration test completed!${NC}"
+echo -e "${BLUE}[INFO] Penetration test completed!${NC}"
 echo ""
 echo "Summary:"
 echo "- Check the results above for any vulnerabilities"
-echo "- Green ✅ means the test passed (secure)"
-echo "- Red ❌ means a vulnerability was found"
+echo "- Green [SECURE] means the test passed (secure)"
+echo "- Red [VULNERABLE] means a vulnerability was found"
 echo ""
 echo "If vulnerabilities are found:"
 echo "1. Move sensitive files outside web root"

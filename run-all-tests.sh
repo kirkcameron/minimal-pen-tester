@@ -46,6 +46,10 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -o|--output)
+            if [[ -z "$2" ]]; then
+                echo "Error: -o requires a filename"
+                exit 1
+            fi
             OUTPUT_FILE="$2"
             shift 2
             ;;
@@ -53,10 +57,14 @@ while [[ $# -gt 0 ]]; do
             show_help
             exit 0
             ;;
+        -*)
+            echo "Error: Unknown option $1"
+            show_help
+            exit 1
+            ;;
         *)
-            if [[ -z "$TARGET_URL" ]]; then
-                TARGET_URL="$1"
-            fi
+            # This is the URL - should be the last argument
+            TARGET_URL="$1"
             shift
             ;;
     esac
@@ -69,9 +77,26 @@ if [[ -z "$TARGET_URL" ]]; then
     exit 1
 fi
 
+# Validate URL format
+if [[ ! "$TARGET_URL" =~ ^https?:// ]]; then
+    echo -e "${RED}Error: URL must start with http:// or https://${NC}"
+    echo "Provided: $TARGET_URL"
+    exit 1
+fi
+
 # Ensure URL ends with /
 if [[ ! "$TARGET_URL" =~ /$ ]]; then
     TARGET_URL="${TARGET_URL}/"
+fi
+
+# Debug output for troubleshooting
+if [[ "$VERBOSE" == "true" ]]; then
+    echo -e "${BLUE}Debug: Parsed arguments${NC}"
+    echo "  TARGET_URL: $TARGET_URL"
+    echo "  VERBOSE: $VERBOSE"
+    echo "  QUICK: $QUICK"
+    echo "  OUTPUT_FILE: $OUTPUT_FILE"
+    echo ""
 fi
 
 # Initialize output file if specified
@@ -83,7 +108,7 @@ if [[ -n "$OUTPUT_FILE" ]]; then
     echo "=================================" >> "$OUTPUT_FILE"
 fi
 
-echo -e "${PURPLE}🔍 Comprehensive Penetration Testing${NC}"
+echo -e "${PURPLE}[INFO] Comprehensive Penetration Testing${NC}"
 echo -e "${PURPLE}Target: $TARGET_URL${NC}"
 echo -e "${PURPLE}Mode: $([ "$QUICK" == "true" ] && echo "Quick" || echo "Comprehensive")${NC}"
 echo ""
@@ -126,10 +151,10 @@ run_test() {
 
 # Always run quick security check
 echo -e "${YELLOW}=== QUICK SECURITY CHECK ===${NC}"
-run_test "Quick Security Check" "pen-test-scripts/quick-sec-check.sh" "$TARGET_URL"
+run_test "Quick Security Check" "pen-test-scripts/quick-security-check.sh" "$TARGET_URL"
 
 if [[ "$QUICK" == "true" ]]; then
-    echo -e "${GREEN}✅ Quick security check completed!${NC}"
+    echo -e "${GREEN}[SUCCESS] Quick security check completed!${NC}"
     echo ""
     echo "For comprehensive testing, run without -q flag"
     exit 0
@@ -140,17 +165,17 @@ echo -e "${YELLOW}=== COMPREHENSIVE TESTING ===${NC}"
 
 # Core penetration tests
 echo -e "${YELLOW}=== CORE PENETRATION TESTS ===${NC}"
-run_test "Basic Penetration Test" "pen-test-scripts/pen-test.sh" "$([ "$VERBOSE" == "true" ] && echo "-v" || echo "") $TARGET_URL"
+run_test "Basic Penetration Test" "pen-test-scripts/pen-test.sh" "$TARGET_URL"
 
 # Specialized tests
 echo -e "${YELLOW}=== SPECIALIZED TESTS ===${NC}"
-run_test "Mail Injection Tests" "pen-test-scripts/mail-injection-tests.sh" "$([ "$VERBOSE" == "true" ] && echo "-v" || echo "") $TARGET_URL"
-run_test "Input Validation Tests" "pen-test-scripts/input-val-tests.sh" "$([ "$VERBOSE" == "true" ] && echo "-v" || echo "") $TARGET_URL"
-run_test "Web Server Security Tests" "pen-test-scripts/web-server-sec.sh" "$([ "$VERBOSE" == "true" ] && echo "-v" || echo "") $TARGET_URL"
+run_test "Mail Injection Tests" "pen-test-scripts/mail-injection-tests.sh" "$TARGET_URL"
+run_test "Input Validation Tests" "pen-test-scripts/input-validation-tests.sh" "$TARGET_URL"
+run_test "Web Server Security Tests" "pen-test-scripts/web-server-security.sh" "$TARGET_URL"
 
 # Advanced testing
 echo -e "${YELLOW}=== ADVANCED TESTING ===${NC}"
-run_test "Advanced Penetration Test" "pen-test-scripts/advanced-pen-test.sh" "$([ "$VERBOSE" == "true" ] && echo "-v" || echo "") $TARGET_URL"
+run_test "Advanced Penetration Test" "pen-test-scripts/advanced-pen-test.sh" "$TARGET_URL"
 
 # Generate final report
 echo -e "${PURPLE}=== FINAL REPORT ===${NC}"
@@ -158,9 +183,9 @@ echo -e "${BLUE}Total test suites: $TOTAL_TESTS${NC}"
 echo -e "${GREEN}Test suites passed: $PASSED_TESTS${NC}"
 
 if [[ "$PASSED_TESTS" -eq "$TOTAL_TESTS" ]]; then
-    echo -e "${GREEN}🎉 All test suites completed successfully!${NC}"
+    echo -e "${GREEN}[SUCCESS] All test suites completed successfully!${NC}"
 else
-    echo -e "${YELLOW}⚠️  Some test suites had issues${NC}"
+    echo -e "${YELLOW}[WARNING] Some test suites had issues${NC}"
 fi
 
 echo ""
@@ -177,4 +202,4 @@ if [[ -n "$OUTPUT_FILE" ]]; then
 fi
 
 echo ""
-echo -e "${PURPLE}🔍 Comprehensive penetration testing completed!${NC}"
+echo -e "${PURPLE}[INFO] Comprehensive penetration testing completed!${NC}"
