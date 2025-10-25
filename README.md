@@ -88,6 +88,10 @@ cd minimal-pen-tester
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
+## 📄 Example Report
+
+See [example_test_report.txt](example_report/example_test_report.txt) for a complete test report against httpbin.org.
+
 ---
 
 **Remember: Always test responsibly and with proper authorization!** 🛡️
