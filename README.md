@@ -32,22 +32,22 @@ cd minimal-pen-tester
 ### Core Testing
 
 - **`run-all-tests.sh`** - Main entry point - runs all tests with comprehensive reporting
-- **`pen-test-scripts/quick-sec-check.sh`** - Fast security assessment (3 critical tests)
+- **`pen-test-scripts/quick-security-check.sh`** - Fast security assessment (3 critical tests)
 - **`pen-test-scripts/pen-test.sh`** - Comprehensive testing with detailed results
-- **`pen-test-scripts/advanced-pen-test.sh`** - Professional-grade testing with multiple attack vectors
+- **`pen-test-scripts/advanced-pen-test.sh`** - Advanced testing with multiple attack vectors
 
 ### Specialized Testing
 
 - **`pen-test-scripts/mail-injection-tests.sh`** - Email header injection testing
-- **`pen-test-scripts/input-val-tests.sh`** - XSS and SQL injection testing
-- **`pen-test-scripts/web-server-sec.sh`** - Web server configuration testing
-- **`pen-test-scripts/process-auth-tests.sh`** - Novel process-based authentication testing
+- **`pen-test-scripts/input-validation-tests.sh`** - XSS and SQL injection testing
+- **`pen-test-scripts/web-server-security.sh`** - Web server configuration testing
+- **`pen-test-scripts/process-auth-tests.sh`** - Process-based authentication testing
 
 ## 🛠️ Usage Examples
 
 ```bash
 # Basic testing
-./pen-test-scripts/quick-sec-check.sh https://httpbin.org
+./pen-test-scripts/quick-security-check.sh https://httpbin.org
 ./pen-test-scripts/pen-test.sh https://httpbin.org
 
 # Comprehensive testing with report
@@ -55,7 +55,8 @@ cd minimal-pen-tester
 
 # Individual specialized tests
 ./pen-test-scripts/mail-injection-tests.sh https://httpbin.org
-./pen-test-scripts/input-val-tests.sh https://httpbin.org
+./pen-test-scripts/input-validation-tests.sh https://httpbin.org
+./pen-test-scripts/web-server-security.sh https://httpbin.org
 ./pen-test-scripts/process-auth-tests.sh https://httpbin.org
 ```
 
@@ -115,7 +116,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - ⚠️ **Security headers**: Missing X-Frame-Options, X-Content-Type-Options
 - ✅ **Directory browsing**: SECURE (disabled)
 - ✅ **HTTP methods**: SECURE (restricted properly)
-- ✅ **Process Auth**: 83.3% success rate (10/12 tests)
+- ⚠️ **Server disclosure**: VULNERABLE (server info exposed)
 
 **Security Assessment:**
 | Test Category | Status | Details |
@@ -123,13 +124,13 @@ MIT License - see [LICENSE](LICENSE) file for details.
 | Direct File Access | ✅ SECURE | All sensitive files return 404 |
 | Rate Limiting | ⚠️ VULNERABLE | No rate limiting detected |
 | Security Headers | ⚠️ VULNERABLE | Missing X-Frame-Options |
-| Process Auth | ✅ SECURE | 83.3% success rate |
+| Server Disclosure | ⚠️ VULNERABLE | Server info exposed |
 
 **Generate your own reports:**
 
 ```bash
 ./run-all-tests.sh -o security-report.txt https://httpbin.org
-./pen-test-scripts/quick-sec-check.sh https://httpbin.org > quick-results.txt
+./pen-test-scripts/quick-security-check.sh https://httpbin.org > quick-results.txt
 ```
 
 **📄 Example Report:** See [example_test_report.txt](example_report/example_test_report.txt) for a complete test report against httpbin.org.
