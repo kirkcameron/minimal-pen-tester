@@ -1,305 +1,72 @@
 Comprehensive Penetration Test Report
-Target: -v/
-Date: Sa 25 Okt 2025 18:18:45 CEST
+Target: https://httpbin.org/
+Date: Sa 25 Okt 2025 20:43:56 CEST
 Mode: Comprehensive
 =================================
 
 === Quick Security Check ===
-[1;33m🔍 Quick Security Check: -v/[0m
+[1;33m[INFO] Quick Security Check: https://httpbin.org/[0m
 
 Testing direct access...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/config.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/.htaccess: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m❌ mail.php: VULNERABLE ()[0m
-[0;31m❌ config.php: VULNERABLE ()[0m
-[0;31m❌ .htaccess: VULNERABLE ()[0m
+[0;32m[SECURE] mail.php: SECURE (404)[0m
+[0;32m[SECURE] config.php: SECURE (404)[0m
+[0;32m[SECURE] .htaccess: SECURE (404)[0m
 
-[0;31m⚠️  Security issues found. Run full penetration test for details.[0m
+[0;32m[SUCCESS] All security checks passed![0m
 
 === Basic Penetration Test ===
-[0;34m🔍 Starting penetration test against: -v/[0m
+[0;34m[INFO] Starting penetration test against: https://httpbin.org/[0m
 
 [1;33mTest 1: Direct script access[0m
-Testing: -v/mail.php
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: mail.php is not directly accessible (HTTP )[0m
+Testing: https://httpbin.org/mail.php
+[0;32m[SECURE] mail.php not found (HTTP 404)[0m
 
 [1;33mTest 2: Config file exposure[0m
-Testing: -v/config.php
-curl: option -v/config.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: config.php is not accessible (HTTP )[0m
+Testing: https://httpbin.org/config.php
+[0;32m[SECURE] config.php not found (HTTP 404)[0m
 
 [1;33mTest 3: .htaccess file exposure[0m
-Testing: -v/.htaccess
-curl: option -v/.htaccess: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: .htaccess is not accessible (HTTP )[0m
+Testing: https://httpbin.org/.htaccess
+[0;32m[SECURE] .htaccess not found (HTTP 404)[0m
 
 [1;33mTest 4: Header injection attack[0m
 Testing header injection via email field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Header injection blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 5: Rate limiting test[0m
-Sending 5 rapid requests to test rate limiting...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m❌ VULNERABLE: No rate limiting detected[0m
+Testing rate limiting on common mail endpoints...
+Testing rate limiting on mail.php...
+[0;31m[VULNERABLE] No rate limiting detected on mail.php[0m
 
 [1;33mTest 6: Input validation test[0m
 Testing with malicious input...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m❌ VULNERABLE: Input validation insufficient (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 7: Directory browsing[0m
-Testing: -v/
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Directory browsing disabled[0m
+Testing: https://httpbin.org/
+[0;32m[SECURE] Directory browsing disabled[0m
 
 [1;33mTest 8: Process authentication[0m
 Testing if server can distinguish between internal and external processes...
-Testing internal process authentication (PID: 44642)...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: Process authentication unclear (HTTP )[0m
-Server response suggests process authentication may not be implemented
+Testing internal process authentication (PID: 37252)...
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 9: External process blocking[0m
 Testing if external processes are blocked...
-Testing external process blocking (PID: 45642)...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: External process blocking unclear (HTTP )[0m
+Testing external process blocking (PID: 38252)...
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 10: Comprehensive process authentication tests[0m
 Running comprehensive process-based authentication test suite...
-Running comprehensive process authentication tests...
-[0;34m========================================[0m
-[0;34mPROCESS-BASED AUTHENTICATION TESTS[0m
-[0;34m========================================[0m
+[1;33m[WARNING] Comprehensive test script not found[0m
+Comprehensive process authentication tests not available
 
-[1;33mChecking dependencies...[0m
-[0;32m✓ Dependencies OK[0m
-
-[1;33mTest 1: Core Authentication Engine[0m
-Testing process relationship validation...
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44693
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.058841, "client_pid": 44693, "server_pid": 44693, "method": "combined", "success": false, "confidence": 0.3333333333333333, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.05917, "client_pid": 1, "server_pid": 44693, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-Legitimate access: FAIL
-External process blocking: PASS
-[1;33mTest 2: Comprehensive Security Tests[0m
-Running comprehensive security test suite...
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44723
-INFO:process_auth_engine:Security level: high
-INFO:__main__:ProcessAuthTester initialized
-INFO:__main__:Starting comprehensive security tests
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.3253691, "client_pid": 44723, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.3333333333333333, "security_level": "high"}
-INFO:__main__:Test test_legitimate_access: FAILED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.325762, "client_pid": 1, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_external_process_blocking: PASSED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.325871, "client_pid": 99999, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.325927, "client_pid": 12345, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.325971, "client_pid": 67890, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.326012, "client_pid": 11111, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_pid_spoofing: PASSED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.326068, "client_pid": 1, "server_pid": 44723, "method": "memory_access", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_memory_access_bypass: PASSED
-INFO:__main__:Test test_process_relationship_spoofing: PASSED
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44723
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_web:ProcessAuthMiddleware initialized
-INFO:__main__:Test test_rate_limiting: PASSED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.850296, "client_pid": 10000, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.85099, "client_pid": 10001, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.851712, "client_pid": 10002, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.852204, "client_pid": 10003, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.852892, "client_pid": 10004, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.853271, "client_pid": 10005, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.853656, "client_pid": 10006, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.854035, "client_pid": 10007, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.8545868, "client_pid": 10009, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.855037, "client_pid": 10008, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_concurrent_attacks: PASSED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.855737, "client_pid": 1, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.855995, "client_pid": 2, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.8562229, "client_pid": 3, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.856538, "client_pid": 4, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.8567889, "client_pid": 5, "server_pid": 44723, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_privilege_escalation: PASSED
-INFO:__main__:Test test_memory_corruption: FAILED
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.856982, "client_pid": 44723, "server_pid": 44723, "method": "process_relationship", "success": true, "confidence": 1.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409126.857118, "client_pid": 2, "server_pid": 44723, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:__main__:Test test_timing_attacks: PASSED
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44723
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_web:ProcessAuthMiddleware initialized
-INFO:__main__:Test test_network_spoofing: PASSED
-INFO:__main__:Test test_system_resource_abuse: PASSED
-
-============================================================
-PROCESS-BASED AUTHENTICATION SECURITY REPORT
-============================================================
-Total Tests: 12
-Passed: 10
-Failed: 2
-Success Rate: 83.3%
-
-Recommendations:
-  - All security tests passed - system appears secure
-============================================================
-[1;33mTest 3: Web Server Integration[0m
-Testing web server integration...
-Starting test server on port 8080...
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44763
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_web:ProcessAuthMiddleware initialized
-INFO:process_auth_web:ProcessAuthHTTPServer started on ('localhost', 8080)
-INFO:process_auth_web:Starting process-authenticated server on localhost:8080
-Test server started
-Testing server response...
-[0;32m✓ Web server responding[0m
-[1;33mTest 4: Process Validation Tests[0m
-Testing process relationship validation...
-Current process PID: 44659
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44844
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409130.1046789, "client_pid": 44659, "server_pid": 44844, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409130.1048162, "client_pid": 1, "server_pid": 44844, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-Current process auth: FAIL (confidence: 0.00)
-Init process auth: PASS (should be blocked)
-[1;33mTest 5: Memory Access Validation[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44874
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409130.275933, "client_pid": 44874, "server_pid": 44874, "method": "memory_access", "success": false, "confidence": 0.0, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409130.275996, "client_pid": 1, "server_pid": 44874, "method": "memory_access", "success": false, "confidence": 0.0, "security_level": "medium"}
-Memory access (current process): FAIL
-Memory access (external process): PASS (should be blocked)
-[1;33mTest 6: Rate Limiting Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44904
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_web:ProcessAuthMiddleware initialized
-Testing rate limiting...
-Request 1: BLOCKED
-Request 2: BLOCKED
-Request 3: BLOCKED
-Request 4: BLOCKED
-Request 5: BLOCKED
-[1;33mTest 7: System Resource Validation[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44942
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.187871, "client_pid": 44942, "server_pid": 44942, "method": "system_resources", "success": false, "confidence": 0.2, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.187945, "client_pid": 1, "server_pid": 44942, "method": "system_resources", "success": false, "confidence": 0.2, "security_level": "medium"}
-System resource validation: FAIL
-External system resource access: PASS (should be blocked)
-[1;33mTest 8: File System Access Validation[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 44972
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.359657, "client_pid": 44972, "server_pid": 44972, "method": "file_system", "success": true, "confidence": 0.5, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.359738, "client_pid": 1, "server_pid": 44972, "method": "file_system", "success": false, "confidence": 0.0, "security_level": "medium"}
-File system access validation: PASS
-External file system access: PASS (should be blocked)
-[1;33mTest 9: Combined Authentication[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45010
-INFO:process_auth_engine:Security level: high
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.531905, "client_pid": 45010, "server_pid": 45010, "method": "combined", "success": false, "confidence": 0.3333333333333333, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.5322618, "client_pid": 1, "server_pid": 45010, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-Combined authentication: FAIL (confidence: 0.33)
-External combined auth: PASS (should be blocked)
-[1;33mTest 10: Performance Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45041
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.703316, "client_pid": 45041, "server_pid": 45041, "method": "combined", "success": false, "confidence": 0.3333333333333333, "security_level": "medium"}
-Average authentication time: 0.0000 seconds
-Performance: GOOD
-[1;33mTest 11: Attack Simulation[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45071
-INFO:process_auth_engine:Security level: high
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.874633, "client_pid": 99999, "server_pid": 45071, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.8748548, "client_pid": 12345, "server_pid": 45071, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.875038, "client_pid": 67890, "server_pid": 45071, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409131.8751302, "client_pid": 11111, "server_pid": 45071, "method": "combined", "success": false, "confidence": 0.0, "security_level": "high"}
-Concurrent attacks: 0/5 successful
-Security: SECURE
-[1;33mTest 12: Memory Corruption Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45101
-INFO:process_auth_engine:Security level: high
-Memory corruption test: FAIL
-[1;33mTest 13: Timing Attack Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45133
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409132.2208169, "client_pid": 45133, "server_pid": 45133, "method": "process_relationship", "success": true, "confidence": 1.0, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409132.2211552, "client_pid": 1, "server_pid": 45133, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409132.221225, "client_pid": 99999, "server_pid": 45133, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-INFO:process_auth_engine:Auth attempt: {"timestamp": 1761409132.221278, "client_pid": 2, "server_pid": 45133, "method": "process_relationship", "success": false, "confidence": 0.0, "security_level": "medium"}
-Timing attack resistance: PASS
-Timing difference: 0.0003 seconds
-[1;33mTest 14: Network Spoofing Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45173
-INFO:process_auth_engine:Security level: medium
-INFO:process_auth_web:ProcessAuthMiddleware initialized
-Network spoofing resistance: PASS
-Trusted IPs: ['127.0.0.1']
-[1;33mTest 15: System Resource Abuse Tests[0m
-INFO:process_auth_engine:ProcessAuthEngine initialized with PID 45203
-INFO:process_auth_engine:Security level: medium
-System resource abuse detection: PASS
-
-[0;34m========================================[0m
-[0;32mALL TESTS COMPLETED[0m
-[0;34m========================================[0m
-
-[1;33mSummary:[0m
-- Process-based authentication engine tested
-- Security vulnerabilities tested
-- Web server integration tested
-- Performance benchmarks completed
-- Attack simulation completed
-
-[0;32mProcess-based authentication system is ready for production![0m
-
-[0;35mKey Features Tested:[0m
-✓ Process relationship validation
-✓ Memory access control
-✓ System resource validation
-✓ File system access control
-✓ Rate limiting
-✓ Attack resistance
-✓ Performance optimization
-
-[0;36mThis novel approach provides:[0m
-• Server-side process knowledge for authentication
-• Defense against external process abuse
-• Impossible-to-spoof process relationships
-• System-level security validation
-• Protection against common attack vectors
-
-[0;34m🔍 Penetration test completed![0m
+[0;34m[INFO] Penetration test completed![0m
 
 Summary:
 - Check the results above for any vulnerabilities
-- Green ✅ means the test passed (secure)
-- Red ❌ means a vulnerability was found
+- Green [SECURE] means the test passed (secure)
+- Red [VULNERABLE] means a vulnerability was found
 
 If vulnerabilities are found:
 1. Move sensitive files outside web root
@@ -309,56 +76,197 @@ If vulnerabilities are found:
 5. Test again after implementing fixes
 
 === Mail Injection Tests ===
-[0;34m🔍 Mail Injection Testing: -v/[0m
+[0;34m[INFO] Mail Injection Testing: https://httpbin.org/[0m
 
-[1;33mTest 1: Email Header Injection[0m
-Testing BCC injection via email field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: BCC injection blocked (HTTP )[0m
+[1;33mTesting tool: mail.php[0m
+Testing BCC injection on mail.php...
+[0;32m[SECURE] mail.php not found or protected (HTTP 404)[0m
+Testing Subject injection on mail.php...
+[0;32m[SECURE] mail.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on mail.php...
+[0;32m[SECURE] mail.php not found or protected (HTTP 404)[0m
+Testing CC injection on mail.php...
+[0;32m[SECURE] mail.php not found or protected (HTTP 404)[0m
+Testing From header injection on mail.php...
+[0;32m[SECURE] mail.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 2: Subject Line Injection[0m
-Testing subject injection via name field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Subject injection blocked (HTTP )[0m
+[1;33mTesting tool: sendmail.php[0m
+Testing BCC injection on sendmail.php...
+[0;32m[SECURE] sendmail.php not found or protected (HTTP 404)[0m
+Testing Subject injection on sendmail.php...
+[0;32m[SECURE] sendmail.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on sendmail.php...
+[0;32m[SECURE] sendmail.php not found or protected (HTTP 404)[0m
+Testing CC injection on sendmail.php...
+[0;32m[SECURE] sendmail.php not found or protected (HTTP 404)[0m
+Testing From header injection on sendmail.php...
+[0;32m[SECURE] sendmail.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 3: Reply-To Manipulation[0m
-Testing Reply-To injection...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Reply-To injection blocked (HTTP )[0m
+[1;33mTesting tool: contact.php[0m
+Testing BCC injection on contact.php...
+[0;32m[SECURE] contact.php not found or protected (HTTP 404)[0m
+Testing Subject injection on contact.php...
+[0;32m[SECURE] contact.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on contact.php...
+[0;32m[SECURE] contact.php not found or protected (HTTP 404)[0m
+Testing CC injection on contact.php...
+[0;32m[SECURE] contact.php not found or protected (HTTP 404)[0m
+Testing From header injection on contact.php...
+[0;32m[SECURE] contact.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 4: CC Injection[0m
-Testing CC injection...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: CC injection blocked (HTTP )[0m
+[1;33mTesting tool: formmail.php[0m
+Testing BCC injection on formmail.php...
+[0;32m[SECURE] formmail.php not found or protected (HTTP 404)[0m
+Testing Subject injection on formmail.php...
+[0;32m[SECURE] formmail.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on formmail.php...
+[0;32m[SECURE] formmail.php not found or protected (HTTP 404)[0m
+Testing CC injection on formmail.php...
+[0;32m[SECURE] formmail.php not found or protected (HTTP 404)[0m
+Testing From header injection on formmail.php...
+[0;32m[SECURE] formmail.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 5: From Header Injection[0m
-Testing From header injection...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: From header injection blocked (HTTP )[0m
+[1;33mTesting tool: mailer.php[0m
+Testing BCC injection on mailer.php...
+[0;32m[SECURE] mailer.php not found or protected (HTTP 404)[0m
+Testing Subject injection on mailer.php...
+[0;32m[SECURE] mailer.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on mailer.php...
+[0;32m[SECURE] mailer.php not found or protected (HTTP 404)[0m
+Testing CC injection on mailer.php...
+[0;32m[SECURE] mailer.php not found or protected (HTTP 404)[0m
+Testing From header injection on mailer.php...
+[0;32m[SECURE] mailer.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 6: Multiple Header Injection[0m
-Testing multiple header injection...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Multiple header injection blocked (HTTP )[0m
+[1;33mTesting tool: send.php[0m
+Testing BCC injection on send.php...
+[0;32m[SECURE] send.php not found or protected (HTTP 404)[0m
+Testing Subject injection on send.php...
+[0;32m[SECURE] send.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on send.php...
+[0;32m[SECURE] send.php not found or protected (HTTP 404)[0m
+Testing CC injection on send.php...
+[0;32m[SECURE] send.php not found or protected (HTTP 404)[0m
+Testing From header injection on send.php...
+[0;32m[SECURE] send.php not found or protected (HTTP 404)[0m
 
-[1;33mTest 7: Email Validation Bypass[0m
-Testing email validation with injection...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Email validation working (HTTP )[0m
+[1;33mTesting tool: email.php[0m
+Testing BCC injection on email.php...
+[0;32m[SECURE] email.php not found or protected (HTTP 404)[0m
+Testing Subject injection on email.php...
+[0;32m[SECURE] email.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on email.php...
+[0;32m[SECURE] email.php not found or protected (HTTP 404)[0m
+Testing CC injection on email.php...
+[0;32m[SECURE] email.php not found or protected (HTTP 404)[0m
+Testing From header injection on email.php...
+[0;32m[SECURE] email.php not found or protected (HTTP 404)[0m
 
-[0;34m🔍 Mail injection testing completed![0m
+[1;33mTesting tool: contact-form.php[0m
+Testing BCC injection on contact-form.php...
+[0;32m[SECURE] contact-form.php not found or protected (HTTP 404)[0m
+Testing Subject injection on contact-form.php...
+[0;32m[SECURE] contact-form.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on contact-form.php...
+[0;32m[SECURE] contact-form.php not found or protected (HTTP 404)[0m
+Testing CC injection on contact-form.php...
+[0;32m[SECURE] contact-form.php not found or protected (HTTP 404)[0m
+Testing From header injection on contact-form.php...
+[0;32m[SECURE] contact-form.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: mail-handler.php[0m
+Testing BCC injection on mail-handler.php...
+[0;32m[SECURE] mail-handler.php not found or protected (HTTP 404)[0m
+Testing Subject injection on mail-handler.php...
+[0;32m[SECURE] mail-handler.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on mail-handler.php...
+[0;32m[SECURE] mail-handler.php not found or protected (HTTP 404)[0m
+Testing CC injection on mail-handler.php...
+[0;32m[SECURE] mail-handler.php not found or protected (HTTP 404)[0m
+Testing From header injection on mail-handler.php...
+[0;32m[SECURE] mail-handler.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: send-mail.php[0m
+Testing BCC injection on send-mail.php...
+[0;32m[SECURE] send-mail.php not found or protected (HTTP 404)[0m
+Testing Subject injection on send-mail.php...
+[0;32m[SECURE] send-mail.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on send-mail.php...
+[0;32m[SECURE] send-mail.php not found or protected (HTTP 404)[0m
+Testing CC injection on send-mail.php...
+[0;32m[SECURE] send-mail.php not found or protected (HTTP 404)[0m
+Testing From header injection on send-mail.php...
+[0;32m[SECURE] send-mail.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: mail-send.php[0m
+Testing BCC injection on mail-send.php...
+[0;32m[SECURE] mail-send.php not found or protected (HTTP 404)[0m
+Testing Subject injection on mail-send.php...
+[0;32m[SECURE] mail-send.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on mail-send.php...
+[0;32m[SECURE] mail-send.php not found or protected (HTTP 404)[0m
+Testing CC injection on mail-send.php...
+[0;32m[SECURE] mail-send.php not found or protected (HTTP 404)[0m
+Testing From header injection on mail-send.php...
+[0;32m[SECURE] mail-send.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: contact-mail.php[0m
+Testing BCC injection on contact-mail.php...
+[0;32m[SECURE] contact-mail.php not found or protected (HTTP 404)[0m
+Testing Subject injection on contact-mail.php...
+[0;32m[SECURE] contact-mail.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on contact-mail.php...
+[0;32m[SECURE] contact-mail.php not found or protected (HTTP 404)[0m
+Testing CC injection on contact-mail.php...
+[0;32m[SECURE] contact-mail.php not found or protected (HTTP 404)[0m
+Testing From header injection on contact-mail.php...
+[0;32m[SECURE] contact-mail.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: form-handler.php[0m
+Testing BCC injection on form-handler.php...
+[0;32m[SECURE] form-handler.php not found or protected (HTTP 404)[0m
+Testing Subject injection on form-handler.php...
+[0;32m[SECURE] form-handler.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on form-handler.php...
+[0;32m[SECURE] form-handler.php not found or protected (HTTP 404)[0m
+Testing CC injection on form-handler.php...
+[0;32m[SECURE] form-handler.php not found or protected (HTTP 404)[0m
+Testing From header injection on form-handler.php...
+[0;32m[SECURE] form-handler.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: mail-process.php[0m
+Testing BCC injection on mail-process.php...
+[0;32m[SECURE] mail-process.php not found or protected (HTTP 404)[0m
+Testing Subject injection on mail-process.php...
+[0;32m[SECURE] mail-process.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on mail-process.php...
+[0;32m[SECURE] mail-process.php not found or protected (HTTP 404)[0m
+Testing CC injection on mail-process.php...
+[0;32m[SECURE] mail-process.php not found or protected (HTTP 404)[0m
+Testing From header injection on mail-process.php...
+[0;32m[SECURE] mail-process.php not found or protected (HTTP 404)[0m
+
+[1;33mTesting tool: send-email.php[0m
+Testing BCC injection on send-email.php...
+[0;32m[SECURE] send-email.php not found or protected (HTTP 404)[0m
+Testing Subject injection on send-email.php...
+[0;32m[SECURE] send-email.php not found or protected (HTTP 404)[0m
+Testing Reply-To injection on send-email.php...
+[0;32m[SECURE] send-email.php not found or protected (HTTP 404)[0m
+Testing CC injection on send-email.php...
+[0;32m[SECURE] send-email.php not found or protected (HTTP 404)[0m
+Testing From header injection on send-email.php...
+[0;32m[SECURE] send-email.php not found or protected (HTTP 404)[0m
+
+[0;34m[INFO] Mail injection testing completed![0m
 
 Summary:
-- Check results above for email header injection vulnerabilities
-- Green ✅ means the test passed (secure)
-- Red ❌ means a vulnerability was found
+- Tested 15 known standard mail tools
+- Green [SECURE] means the tool is secure or not found
+- Red [VULNERABLE] means a vulnerability was found
+
+Note: This script only tests KNOWN standard mail tools.
+Private/custom mail handlers are not tested to avoid false positives.
 
 If vulnerabilities are found:
 1. Implement proper input sanitization
@@ -367,75 +275,55 @@ If vulnerabilities are found:
 4. Use parameterized email sending functions
 
 === Input Validation Tests ===
-[0;34m🔍 Input Validation Testing: -v/[0m
+[0;34m[INFO] Input Validation Testing: https://httpbin.org/[0m
 
 [1;33mTest 1: XSS in Name Field[0m
 Testing XSS payload in name field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: XSS in name field blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 2: XSS in Email Field[0m
 Testing XSS payload in email field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: XSS in email field blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 3: XSS in Message Field[0m
 Testing XSS payload in message field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: XSS in message field blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 4: SQL Injection in Name Field[0m
 Testing SQL injection in name field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: SQL injection in name field blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 5: SQL Injection in Email Field[0m
 Testing SQL injection in email field...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: SQL injection in email field blocked (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 6: Input Length Validation[0m
 Testing oversized input...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Input length validation active (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 7: Empty Field Validation[0m
 Testing empty fields...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Empty fields rejected (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 8: Email Format Validation[0m
 Testing invalid email format...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Invalid email format rejected (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 9: Special Character Handling[0m
 Testing special characters...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: Special characters rejected (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
 [1;33mTest 10: Unicode Character Handling[0m
 Testing Unicode characters...
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: Unicode characters rejected (HTTP )[0m
+[0;32m[SECURE] mail.php not accessible (HTTP 404)[0m
 
-[0;34m🔍 Input validation testing completed![0m
+[0;34m[INFO] Input validation testing completed![0m
 
 Summary:
 - Check results above for input validation vulnerabilities
-- Green ✅ means the test passed (secure)
-- Red ❌ means a vulnerability was found
-- Yellow ⚠️ means a warning (may be acceptable)
+- Green [SECURE] means the test passed (secure)
+- Red [VULNERABLE] means a vulnerability was found
+- Yellow [WARNING] means a warning (may be acceptable)
 
 If vulnerabilities are found:
 1. Implement proper input sanitization
@@ -445,197 +333,109 @@ If vulnerabilities are found:
 5. Implement output encoding for XSS prevention
 
 === Web Server Security Tests ===
-[0;34m🔍 Web Server Security Testing: -v/[0m
+[0;34mWeb Server Security Testing: https://httpbin.org/[0m
 
 [1;33mTest 1: Directory Browsing[0m
 Testing directory listing...
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: Directory browsing disabled[0m
+[0;32mSECURE: Directory browsing disabled[0m
 
 [1;33mTest 2: Sensitive File Access[0m
 Testing access to sensitive files...
-curl: option -v/.htaccess: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: .htaccess protected (HTTP )[0m
-curl: option -v/config.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: config.php protected (HTTP )[0m
-curl: option -v/.env: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: .env protected (HTTP )[0m
+Testing sensitive files at base domain: https://
+[0;32mSECURE: .htaccess protected (HTTP 000)[0m
+[0;32mSECURE: config.php protected (HTTP 000)[0m
+[0;32mSECURE: .env protected (HTTP 000)[0m
 
 [1;33mTest 3: Server Information Disclosure[0m
 Testing server information disclosure...
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: No server information disclosed[0m
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: No technology stack disclosed[0m
+[1;33mWARNING: Server information disclosed: server: gunicorn/19.9.0[0m
+[0;31mVULNERABLE: Technology stack disclosed:                     [Powered by[0m
 
 [1;33mTest 4: Security Headers[0m
 Testing security headers...
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m❌ VULNERABLE: X-Frame-Options header missing[0m
-[0;31m❌ VULNERABLE: X-Content-Type-Options header missing[0m
-[0;31m❌ VULNERABLE: X-XSS-Protection header missing[0m
-[1;33m⚠️  WARNING: Strict-Transport-Security header missing[0m
+[0;31mVULNERABLE: X-Frame-Options header missing[0m
+[0;31mVULNERABLE: X-Content-Type-Options header missing[0m
+[0;31mVULNERABLE: X-XSS-Protection header missing[0m
+[1;33mWARNING: Strict-Transport-Security header missing[0m
 
 [1;33mTest 5: HTTP Methods[0m
 Testing allowed HTTP methods...
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: OPTIONS method restricted[0m
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: TRACE method restricted[0m
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: PUT method restricted[0m
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m✅ SECURE: DELETE method restricted[0m
+[0;31mVULNERABLE: OPTIONS method allowed[0m
+[0;32mSECURE: TRACE method restricted[0m
+[0;32mSECURE: PUT method restricted[0m
+[0;32mSECURE: DELETE method restricted[0m
 
 [1;33mTest 6: Error Handling[0m
 Testing error handling...
-curl: option -v/nonexistent-file.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: 404 error handling unusual (HTTP )[0m
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[1;33m⚠️  WARNING: 500 error handling unusual (HTTP )[0m
+[1;33mWARNING: 404 error handling unusual (HTTP 502000)[0m
+[1;33mWARNING: 500 error handling unusual - HTTP 200000[0m
 
-[1;33m⚠️  WARNING: Not testing SSL/TLS (HTTP connection)[0m
+[1;33mTest 7: SSL/TLS Configuration[0m
+Testing SSL/TLS configuration...
+[0;32mSECURE: SSL certificate present[0m
 
-[0;34m🔍 Web server security testing completed![0m
+[0;34mWeb server security testing completed![0m
 
 Summary:
 - Check results above for web server configuration issues
-- Green ✅ means the test passed (secure)
-- Red ❌ means a vulnerability was found
-- Yellow ⚠️ means a warning (may be acceptable)
+- Green means the test passed - secure
+- Red means a vulnerability was found
+- Yellow means a warning - may be acceptable
 
 If vulnerabilities are found:
 1. Configure web server security rules
 2. Add security headers
 3. Restrict HTTP methods
 4. Implement proper error handling
-5. Configure SSL/TLS properly
 
 === Advanced Penetration Test ===
-[0;35m🔍 Advanced Penetration Testing[0m
-[0;35mTarget: -v/[0m
+[0;35m[INFO] Advanced Penetration Testing[0m
+[0;35mTarget: https://httpbin.org/[0m
 [0;35mMode: Standard[0m
 
 [0;36m=== DIRECT ACCESS TESTS ===[0m
-[0;34m[2025-10-25 18:18:52] INFO: Running test: Direct mail.php access[0m
-Command: curl -s -o /dev/null -w '%{http_code}' '-v/'mail.php
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:52] VULNERABILITY: Test failed: Direct mail.php access - Direct script access[0m
-Expected: 404, Got: 
-[0;34m[2025-10-25 18:18:53] INFO: Running test: Config file access[0m
-Command: curl -s -o /dev/null -w '%{http_code}' '-v/'config.php
-curl: option -v/config.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:53] VULNERABILITY: Test failed: Config file access - Config file exposure[0m
-Expected: 404, Got: 
-[0;34m[2025-10-25 18:18:54] INFO: Running test: .htaccess access[0m
-Command: curl -s -o /dev/null -w '%{http_code}' '-v/'.htaccess
-curl: option -v/.htaccess: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:54] VULNERABILITY: Test failed: .htaccess access - .htaccess exposure[0m
-Expected: 404, Got: 
+[0;34m[2025-10-25 20:46:01] INFO: Running test: Direct mail.php access[0m
+[0;32m[2025-10-25 20:46:01] SUCCESS: Test passed: Direct mail.php access[0m
+[0;34m[2025-10-25 20:46:02] INFO: Running test: Config file access[0m
+[0;32m[2025-10-25 20:46:03] SUCCESS: Test passed: Config file access[0m
+[0;34m[2025-10-25 20:46:04] INFO: Running test: .htaccess access[0m
+[0;32m[2025-10-25 20:46:05] SUCCESS: Test passed: .htaccess access[0m
 [0;36m=== HEADER INJECTION TESTS ===[0m
-[0;34m[2025-10-25 18:18:55] INFO: Running test: Email header injection[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test&email=test@evil.com%0d%0aBcc:spam@victim.com&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:55] VULNERABILITY: Test failed: Email header injection - Email header injection[0m
-Expected: 400, Got: 
-[0;34m[2025-10-25 18:18:56] INFO: Running test: Name header injection[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test%0d%0aSubject:FAKE&email=test@test.com&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:56] VULNERABILITY: Test failed: Name header injection - Name header injection[0m
-Expected: 400, Got: 
+[0;34m[2025-10-25 20:46:06] INFO: Running test: Email header injection[0m
+[0;32m[2025-10-25 20:46:08] SUCCESS: Test passed: Email header injection[0m
+[0;34m[2025-10-25 20:46:09] INFO: Running test: Name header injection[0m
+[0;32m[2025-10-25 20:46:10] SUCCESS: Test passed: Name header injection[0m
 [0;36m=== XSS ATTACK TESTS ===[0m
-[0;34m[2025-10-25 18:18:57] INFO: Running test: XSS in name field[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=<script>alert(1)</script>&email=test@test.com&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:57] VULNERABILITY: Test failed: XSS in name field - XSS in name field[0m
-Expected: 400, Got: 
-[0;34m[2025-10-25 18:18:58] INFO: Running test: XSS in message field[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test&email=test@test.com&message=<script>alert(1)</script>' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:18:59] VULNERABILITY: Test failed: XSS in message field - XSS in message field[0m
-Expected: 400, Got: 
+[0;34m[2025-10-25 20:46:11] INFO: Running test: XSS in name field[0m
+[0;32m[2025-10-25 20:46:11] SUCCESS: Test passed: XSS in name field[0m
+[0;34m[2025-10-25 20:46:12] INFO: Running test: XSS in message field[0m
+[0;32m[2025-10-25 20:46:13] SUCCESS: Test passed: XSS in message field[0m
 [0;36m=== SQL INJECTION TESTS ===[0m
-[0;34m[2025-10-25 18:19:00] INFO: Running test: SQL injection in name[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=1'\'' OR '\''1'\''='\''1&email=test@test.com&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:19:00] VULNERABILITY: Test failed: SQL injection in name - SQL injection in name[0m
-Expected: 400, Got: 
-[0;34m[2025-10-25 18:19:01] INFO: Running test: SQL injection in email[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test&email=test@test.com'\'' OR '\''1'\''='\''1&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:19:01] VULNERABILITY: Test failed: SQL injection in email - SQL injection in email[0m
-Expected: 400, Got: 
+[0;34m[2025-10-25 20:46:14] INFO: Running test: SQL injection in name[0m
+[0;31m[2025-10-25 20:46:16] VULNERABILITY: Test failed: SQL injection in name - SQL injection in name[0m
+[0;34m[2025-10-25 20:46:17] INFO: Running test: SQL injection in email[0m
+[0;32m[2025-10-25 20:46:18] SUCCESS: Test passed: SQL injection in email[0m
 [0;36m=== RATE LIMITING TESTS ===[0m
-[0;34m[2025-10-25 18:19:02] INFO: Testing rate limiting with 5 requests...[0m
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
+[0;34m[2025-10-25 20:46:19] INFO: Testing rate limiting with 5 requests...[0m
 [0;36m=== INPUT VALIDATION TESTS ===[0m
-[0;34m[2025-10-25 18:19:07] INFO: Running test: Empty fields[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=&email=&message=' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:19:07] VULNERABILITY: Test failed: Empty fields - Empty field validation[0m
-Expected: 400, Got: 
-[0;34m[2025-10-25 18:19:08] INFO: Running test: Invalid email format[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test&email=invalid-email&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:19:08] VULNERABILITY: Test failed: Invalid email format - Email format validation[0m
-Expected: 400, Got: 
-[0;34m[2025-10-25 18:19:09] INFO: Running test: Oversized input[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&email=test@test.com&message=Test' -w '%{http_code}'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;31m[2025-10-25 18:19:09] VULNERABILITY: Test failed: Oversized input - Input length validation[0m
-Expected: 400, Got: 
+[0;34m[2025-10-25 20:46:29] INFO: Running test: Empty fields[0m
+[0;32m[2025-10-25 20:46:30] SUCCESS: Test passed: Empty fields[0m
+[0;34m[2025-10-25 20:46:31] INFO: Running test: Invalid email format[0m
+[0;32m[2025-10-25 20:46:31] SUCCESS: Test passed: Invalid email format[0m
+[0;34m[2025-10-25 20:46:32] INFO: Running test: Oversized input[0m
+[0;32m[2025-10-25 20:46:33] SUCCESS: Test passed: Oversized input[0m
 [0;36m=== DIRECTORY BROWSING TESTS ===[0m
-[0;34m[2025-10-25 18:19:10] INFO: Running test: Directory listing[0m
-Command: curl -s '-v/' | grep -q 'Index of' && echo '200' || echo '404'
-curl: option -v/: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m[2025-10-25 18:19:10] SUCCESS: Test passed: Directory listing[0m
+[0;34m[2025-10-25 20:46:34] INFO: Running test: Directory listing[0m
+[0;32m[2025-10-25 20:46:36] SUCCESS: Test passed: Directory listing[0m
 [0;36m=== INFORMATION DISCLOSURE TESTS ===[0m
-[0;34m[2025-10-25 18:19:11] INFO: Running test: Error message disclosure[0m
-Command: curl -s -X POST '-v/'mail.php -d 'name=Test&email=test@test.com&message=Test' | grep -q 'error\|exception\|stack trace' && echo '200' || echo '404'
-curl: option -v/mail.php: is unknown
-curl: try 'curl --help' or 'curl --manual' for more information
-[0;32m[2025-10-25 18:19:11] SUCCESS: Test passed: Error message disclosure[0m
+[0;34m[2025-10-25 20:46:37] INFO: Running test: Error message disclosure[0m
+[0;32m[2025-10-25 20:46:39] SUCCESS: Test passed: Error message disclosure[0m
 
 [0;35m=== PENETRATION TEST SUMMARY ===[0m
 [0;34mTotal tests: 14[0m
-[0;32mTests passed: 2[0m
-[0;31mVulnerabilities found: 12[0m
-[0;31m⚠️  12 vulnerabilities found! Please review and fix the issues above.[0m
+[0;32mTests passed: 13[0m
+[0;31mVulnerabilities found: 1[0m
+[0;31m[WARNING] 1 vulnerabilities found! Please review and fix the issues above.[0m
 
 [1;33mRecommendations:[0m
 1. Move sensitive files outside web root
