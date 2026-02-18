@@ -164,7 +164,7 @@ if [[ "$mail_response" == "404" ]]; then
         echo "Testing rate limiting on secure-mail-handler.php..."
         for i in {1..3}; do
             response=$(curl -s -X POST "$TARGET_URL"secure-mail-handler.php \
-                -d "name=Spam$i&email=spam$i@test.com&message=Spam test $i&_token=kraemer_secure_2024_$(date +%Y-%m-%d)" \
+                -d "name=Spam$i&email=spam$i@test.com&message=Spam test $i&_token=test_secure_2024_$(date +%Y-%m-%d)" \
                 -w "%{http_code}")
             if [[ "$response" == "429" ]]; then
                 echo -e "${GREEN}[SECURE] Rate limiting active (HTTP $response)${NC}"
